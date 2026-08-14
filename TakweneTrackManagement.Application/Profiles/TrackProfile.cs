@@ -14,10 +14,16 @@ namespace TakweneTrackManagement.Application.Profiles
         public TrackProfile()
         {
 
-            CreateMap<Track, TrackDto>()
+            CreateMap<Track, TrackToReturnDto>()
                 .ForMember(dst => dst.ArtistName, opt => opt.MapFrom(src => src.Artist.Name));
-               
-      
+
+        
+
+            CreateMap<TrackDto, Track>()
+    .ForMember(dst => dst.Status, opt => opt.MapFrom(src => Enum.Parse<TrackStatus>(src.Status, true))).ReverseMap();
+
+
+
         }
     }
 }

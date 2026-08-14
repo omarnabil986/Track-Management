@@ -20,6 +20,9 @@ namespace TakweneTrackManagement.Infrastructure.Data.Configurations
             builder.Property(x => x.Status)
             .HasConversion<string>();
 
+            builder.HasIndex(x => x.Isrc)
+         .IsUnique();
+
         }
     }
 }
