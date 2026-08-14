@@ -63,7 +63,7 @@ namespace TakweneTrackManagement.Application.Services
         }
 
         public async Task<Result<IReadOnlyList<TrackDistributionDto>>> DistributeTrackAsync(
-    int trackId, DistributeTrackDto dto, CancellationToken ct = default)
+         int trackId, DistributeTrackDto dto, CancellationToken ct = default)
         {
             var track = await _unitOfWork.GetRepository<Track, int>().GetByIdAsync(trackId, ct);
             if (track == null)
@@ -84,6 +84,24 @@ namespace TakweneTrackManagement.Application.Services
             var result = _mapper.Map<IReadOnlyList<TrackDistributionDto>>(distributions);
 
             return Result<IReadOnlyList<TrackDistributionDto>>.Ok(result);
+        }
+
+        public async Task<Result<TrackToReturnDto>> UpdateTrackStatusAsync(
+        int id, UpdateTrackStatusDto dto, CancellationToken ct = default)
+        {
+            var spec = new TrackWithArtistSpec(id);
+            var track = await _unitOfWork.GetRepository<Track, int>().GetByIdAsync(spec, ct);
+            if (track == null)
+                return Error.NotFound("Track.NotFound", $"Track with id {id} is not found");
+
+            if (!Enum.TryParse<TrackStatus>(dto.Status, true, out var status))
+                return Error.Validation("Track.InvalidStatus", $"Invalid status value: '{dto.Status}'");
+
+            track.Status = status;
+            _unitOfWork.GetRepository<Track, int>().Update(track);
+            await _unitOfWork.SaveChangesAsync(ct);
+
+            return _mapper.Map<TrackToReturnDto>(track);
         }
     }
 }

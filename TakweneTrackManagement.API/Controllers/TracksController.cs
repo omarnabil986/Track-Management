@@ -45,9 +45,18 @@ namespace TakweneTrackManagement.API.Controllers
 
         [HttpPost("{id}/distribute")]
         public async Task<ActionResult<IReadOnlyList<TrackDistributionDto>>> DistributeTrack(
-    int id, DistributeTrackDto dto, CancellationToken ct)
+         int id, DistributeTrackDto dto, CancellationToken ct)
         {
             var result = await _trackService.DistributeTrackAsync(id, dto, ct);
+            return ToActionResult(result);
+        }
+
+
+        [HttpPatch("{id}/status")]
+        public async Task<ActionResult<TrackToReturnDto>> UpdateTrackStatus(
+         int id, UpdateTrackStatusDto dto, CancellationToken ct)
+        {
+            var result = await _trackService.UpdateTrackStatusAsync(id, dto, ct);
             return ToActionResult(result);
         }
     }
