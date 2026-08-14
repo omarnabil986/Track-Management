@@ -10,7 +10,7 @@ namespace TakweneTrackManagement.Application.Contracts
 {
     public interface ITrackService
     {
-        Task<Result<IReadOnlyList<TrackDto>>> GetAllTracksAsync(CancellationToken ct = default);
+        Task<Result<IReadOnlyList<TrackDto>>> GetAllTracksAsync(string? Status, int? ArtistId, string? Genre, CancellationToken ct = default);
         Task<Result<TrackDto>> GetTrackByIdAsync(int id, CancellationToken ct = default);
     }
 }

@@ -19,9 +19,9 @@ namespace TakweneTrackManagement.API.Controllers
 
         [HttpGet]
 
-        public async Task<ActionResult<IReadOnlyList<TrackDto>>> GetAllTracks(CancellationToken ct)
+        public async Task<ActionResult<IReadOnlyList<TrackDto>>> GetAllTracks(string? Status, int? ArtistId, string? Genre, CancellationToken ct)
         {
-            var result = await _trackService.GetAllTracksAsync(ct);
+            var result = await _trackService.GetAllTracksAsync(Status, ArtistId, Genre, ct);
             return ToActionResult(result);
         }
 
