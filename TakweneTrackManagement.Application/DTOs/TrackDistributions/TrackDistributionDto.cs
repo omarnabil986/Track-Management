@@ -12,14 +12,7 @@ namespace TakweneTrackManagement.Application.DTOs.TrackDistributions
     public class TrackDistributionDto
     {
 
-        public int TrackId { get; set; }
-      
-
-        public int DspId { get; set; }
-    
-
-        public DateTime SubmittedAt { get; set; }
-
+        public string DspName { get; set; } = default!;
         public string Status { get; set; } = default!;
     }
 }

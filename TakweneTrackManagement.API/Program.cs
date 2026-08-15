@@ -25,6 +25,17 @@ namespace TakweneTrackManagement.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+       
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             await app.SeedAndMigrateDataAsync();
@@ -37,6 +48,8 @@ namespace TakweneTrackManagement.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularDev");
 
             app.UseAuthorization();
 

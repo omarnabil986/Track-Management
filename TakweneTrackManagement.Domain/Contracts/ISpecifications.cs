@@ -14,5 +14,7 @@ namespace TakweneTrackManagement.Domain.Contracts
 
         Expression<Func<TEntity, bool>> Criteria { get; }
 
+        ICollection<string> IncludeStrings { get; }
+
     }
 }

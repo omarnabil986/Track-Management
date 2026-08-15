@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TakweneTrackManagement.Application.DTOs.TrackDistributions;
 using TakweneTrackManagement.Application.DTOs.Tracks;
+using TakweneTrackManagement.Domain.Entities.TrackDistributions;
 using TakweneTrackManagement.Domain.Entities.Tracks;
 
 namespace TakweneTrackManagement.Application.Profiles
@@ -15,13 +17,17 @@ namespace TakweneTrackManagement.Application.Profiles
         {
 
             CreateMap<Track, TrackToReturnDto>()
-                .ForMember(dst => dst.ArtistName, opt => opt.MapFrom(src => src.Artist.Name));
+                .ForMember(dst => dst.ArtistName, opt => opt.MapFrom(src => src.Artist.Name))
+                .ForMember(dst => dst.Distributions, opt => opt.MapFrom(src => src.TrackDistributions));
 
-        
+
 
             CreateMap<TrackDto, Track>()
     .ForMember(dst => dst.Status, opt => opt.MapFrom(src => Enum.Parse<TrackStatus>(src.Status, true))).ReverseMap();
 
+
+            CreateMap<TrackDistribution, TrackDistributionDto>()
+            .ForMember(dst => dst.DspName, opt => opt.MapFrom(src => src.Dsp.Name));
 
 
         }

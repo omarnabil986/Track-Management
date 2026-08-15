@@ -26,7 +26,11 @@ namespace TakweneTrackManagement.Infrastructure.Specifications
                 query = spec.IncludeExpressions.Aggregate(query, (current, nextExp) => current.Include(nextExp));
             }
 
-       
+            if (spec.IncludeStrings.Any())
+            {
+                query = spec.IncludeStrings.Aggregate(query, (current, includeStr) => current.Include(includeStr));
+            }
+
 
             return query;
         }

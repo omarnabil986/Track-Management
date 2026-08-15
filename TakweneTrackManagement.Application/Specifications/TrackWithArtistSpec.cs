@@ -18,12 +18,15 @@ namespace TakweneTrackManagement.Application.Specifications
      )
         {
             AddInclude(t => t.Artist);
+            AddInclude("TrackDistributions.Dsp");
         }
 
         public TrackWithArtistSpec(int id) : base(x => x.Id == id)
         {
             AddInclude(t => t.Artist);
-       
+            AddInclude("TrackDistributions.Dsp");
+
+
         }
     }
 }

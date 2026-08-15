@@ -10,7 +10,7 @@ namespace TakweneTrackManagement.Application.DTOs.Tracks
 {
     public class TrackDto
     {
-
+     
         public string Title { get; set; } = default!;
         public string Isrc { get; set; } = default!;
         public DateTime ReleaseDate { get; set; }

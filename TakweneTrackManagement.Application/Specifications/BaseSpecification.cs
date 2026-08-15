@@ -12,7 +12,7 @@ namespace TakweneTrackManagement.Application.Specifications
     internal abstract class BaseSpecification<TEntity, TKey> : ISpecifications<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
         public ICollection<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
-
+        public ICollection<string> IncludeStrings { get; } = [];
         public Expression<Func<TEntity, bool>> Criteria { get; private set; }
 
         protected BaseSpecification(Expression<Func<TEntity, bool>> criteria)
@@ -24,7 +24,12 @@ namespace TakweneTrackManagement.Application.Specifications
             IncludeExpressions.Add(include);
         }
 
-    
+        protected void AddInclude(string includeString)
+        {
+            IncludeStrings.Add(includeString);
+        }
+
+
 
     }
 }
