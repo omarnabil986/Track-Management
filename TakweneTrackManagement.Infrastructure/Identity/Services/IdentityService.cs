@@ -1,0 +1,59 @@
+﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TakweneTrackManagement.Application.Common;
+using TakweneTrackManagement.Application.Contracts;
+using TakweneTrackManagement.Infrastructure.Identity.Entities;
+
+namespace TakweneTrackManagement.Infrastructure.Identity.Services
+{
+    internal class IdentityService : IIdentityService
+    {
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public IdentityService(UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+        }
+        public async Task<Result<bool>> CheckPasswordAsync(string email, string password, CancellationToken ct = default)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return Result<bool>.Fail(Error.NotFound("User Not Found", $"USer With Email {email} Is Not Found"));
+            else
+                return await _userManager.CheckPasswordAsync(user, password);
+        }
+
+
+
+        public async Task<Result<IdentityUserResult>> FindUserByEmailAsync(string email, CancellationToken ct = default)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return Result<IdentityUserResult>.Fail(Error.NotFound("User Not Found", $"USer With Email {email} Is Not Found"));
+            else
+                return Result<IdentityUserResult>.Ok(new IdentityUserResult(user.Id, user.DisplayName, user.Email, user.UserName));
+        }
+
+
+        public async Task<Result<IReadOnlyList<string>>> GetUserRoles(string email, CancellationToken ct = default)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return Error.NotFound("User Not Found", $"User with Email {email} is Not Found");
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return roles.ToList();
+        }
+
+
+
+
+    }
+}

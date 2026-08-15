@@ -112,7 +112,7 @@ namespace TakweneTrackManagement.Infrastructure.Data.Migrations
 
                     b.Property<string>("Isrc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
@@ -128,6 +128,9 @@ namespace TakweneTrackManagement.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("Isrc")
+                        .IsUnique();
 
                     b.ToTable("Tracks");
                 });

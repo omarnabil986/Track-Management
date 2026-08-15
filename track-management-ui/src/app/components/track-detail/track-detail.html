@@ -1,0 +1,59 @@
+@if (track) {
+  <div class="container">
+    <a routerLink="/" class="back-link">&larr; Back to tracks</a>
+
+    <h1>{{ track.title }}</h1>
+
+    <div class="info-grid">
+      <div>
+        <span class="label">Artist</span><span>{{ track.artistName }}</span>
+      </div>
+      <div>
+        <span class="label">ISRC</span><span>{{ track.isrc }}</span>
+      </div>
+      <div>
+        <span class="label">Genre</span><span>{{ track.genre }}</span>
+      </div>
+      <div>
+        <span class="label">Release Date</span
+        ><span>{{ track.releaseDate | date }}</span>
+      </div>
+      <div>
+        <span class="label">Status</span
+        ><span class="status-badge" [ngClass]="track.status.toLowerCase()">{{
+          track.status
+        }}</span>
+      </div>
+    </div>
+
+    <h2>DSP Distributions</h2>
+    @if (track.distributions?.length) {
+      <table class="dist-table">
+        <thead>
+          <tr>
+            <th>DSP</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of track.distributions; track d.dspName) {
+            <tr>
+              <td>{{ d.dspName }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="d.status.toLowerCase()">{{
+                  d.status
+                }}</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="empty">This track hasn't been submitted to any DSPs yet.</p>
+    }
+  </div>
+} @else {
+  <div class="container">
+    <p>Loading track…</p>
+  </div>
+}

@@ -15,6 +15,8 @@ namespace TakweneTrackManagement.Application
         {
             services.AddAutoMapper(c => { }, typeof(ApplicationServicesRegistration).Assembly);
             services.AddScoped<ITrackService, TrackService>();
+            services.AddScoped<IArtistService, ArtistService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             return services;
         }
     }

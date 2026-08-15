@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Tracks</h1>
+
+  <div class="filter-bar">
+    <label for="status">Filter by status:</label>
+    <select id="status" [(ngModel)]="statusFilter" (change)="onFilterChange()">
+      <option value="">All</option>
+      <option value="Draft">Draft</option>
+      <option value="Submitted">Submitted</option>
+      <option value="Distributed">Distributed</option>
+    </select>
+  </div>
+
+  <table class="track-table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (t of tracks; track t.id) {
+        <tr (click)="viewTrack(t.id)" class="track-row">
+          <td>{{ t.id }}</td>
+          <td>{{ t.artistName }}</td>
+          <td>{{ t.genre }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="t.status.toLowerCase()">{{
+              t.status
+            }}</span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" class="empty">No tracks found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

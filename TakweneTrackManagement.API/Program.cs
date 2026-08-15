@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TakweneTrackManagement.API.Extensions;
 using TakweneTrackManagement.Application;
 using TakweneTrackManagement.Infrastructure;
+using TakweneTrackManagement.Infrastructure.Identity.Services;
 
 namespace TakweneTrackManagement.API
 {
@@ -18,9 +19,22 @@ namespace TakweneTrackManagement.API
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddApplicationServices();
 
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWT"));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+       
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -34,6 +48,8 @@ namespace TakweneTrackManagement.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularDev");
 
             app.UseAuthorization();
 
