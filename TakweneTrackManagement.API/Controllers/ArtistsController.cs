@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TakweneTrackManagement.Application.Contracts;
 using TakweneTrackManagement.Application.DTOs.Artists;
@@ -23,6 +24,7 @@ namespace TakweneTrackManagement.API.Controllers
         }
 
 
+        [Authorize]
         [HttpGet]
 
         public async Task<ActionResult<IReadOnlyList<ArtistDto>>> GetAllArtists(CancellationToken ct)

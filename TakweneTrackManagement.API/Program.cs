@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TakweneTrackManagement.API.Extensions;
 using TakweneTrackManagement.Application;
 using TakweneTrackManagement.Infrastructure;
+using TakweneTrackManagement.Infrastructure.Identity.Services;
 
 namespace TakweneTrackManagement.API
 {
@@ -17,6 +18,8 @@ namespace TakweneTrackManagement.API
             builder.Services.AddControllers();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddApplicationServices();
+
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWT"));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
